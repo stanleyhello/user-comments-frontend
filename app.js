@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const companyInput = document.getElementById('companyInput');
         const commentInput = document.getElementById('commentInput');
+        const nameInput = document.getElementById('nameInput');
+        const emailInput = document.getElementById('emailInput');
 
         try {
             const response = await fetch(`${BACKEND_URL}/submit_comment`, {
@@ -19,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     company: companyInput.value,
-                    comment: commentInput.value
+                    comment: commentInput.value,
+                    name: nameInput.value || null,
+                    email: emailInput.value || null
                 })
             });
 
@@ -28,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Comment submitted successfully!');
                 companyInput.value = '';
                 commentInput.value = '';
+                nameInput.value = '';
+                emailInput.value = '';
                 fetchSummary();
             } else {
                 alert('Error submitting comment: ' + result.message);
