@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://user-comments.onrender.com/"; // Replace with your Render URL
+const BACKEND_URL = "https://user-comments-backend.onrender.com"; // Replace with your Render URL
 
 document.addEventListener('DOMContentLoaded', () => {
     const commentForm = document.getElementById('commentForm');
