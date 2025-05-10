@@ -48,17 +48,19 @@
                 </section>
             </div>
 
-            <section id="issuesSection" class="dashboard-card fade-in">
-                <h2 class="card-title">Most Common Issues</h2>
-                <canvas id="issuesChart" width="400" height="200"></canvas>
-                <p id="issuesChartError" class="error-message"></p>
-            </section>
+            <div class="charts-row fade-in">
+                <section id="issuesSection" class="dashboard-card chart-card">
+                    <h2 class="card-title">Most Common Issues</h2>
+                    <canvas id="issuesChart" width="320" height="160"></canvas>
+                    <p id="issuesChartError" class="error-message"></p>
+                </section>
 
-            <section id="sentimentSection" class="dashboard-card fade-in">
-                <h2 class="card-title">User Sentiment Over Time</h2>
-                <canvas id="sentimentChart" width="400" height="200"></canvas>
-                <p id="sentimentChartError" class="error-message"></p>
-            </section>
+                <section id="sentimentSection" class="dashboard-card chart-card">
+                    <h2 class="card-title">User Sentiment Over Time</h2>
+                    <canvas id="sentimentChart" width="320" height="160"></canvas>
+                    <p id="sentimentChartError" class="error-message"></p>
+                </section>
+            </div>
         </main>
     </div>
 
