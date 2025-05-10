@@ -7,8 +7,8 @@ body {
 }
 
 .container {
-    max-width: 700px;
-    width: 95%;
+    max-width: 1200px;
+    width: 98%;
     margin: 32px auto 32px auto;
     padding: 24px 16px;
     background-color: white;
@@ -25,7 +25,7 @@ body {
     .dashboard-section {
         padding: 8px 0 0 0;
     }
-    .summary-box, .result-box {
+    .summary-block, .result-block {
         font-size: 0.97rem;
         padding: 8px;
     }
@@ -38,6 +38,14 @@ body {
     }
     .suggestion-buttons {
         gap: 6px;
+    }
+    .top-row {
+        flex-direction: column !important;
+    }
+    #summarySection, #querySection {
+        width: 100% !important;
+        min-width: 0 !important;
+        margin-right: 0 !important;
     }
 }
 
@@ -69,6 +77,37 @@ body {
     background: none;
     border-radius: 0;
     border: none;
+    min-width: 320px;
+}
+
+.top-row {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    margin-bottom: 32px;
+    width: 100%;
+}
+#summarySection, #querySection {
+    flex: 1 1 0;
+    min-width: 340px;
+    margin-right: 0;
+}
+.summary-block, .result-block {
+    background-color: white;
+    padding: 18px 16px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    min-height: 110px;
+    max-height: 220px;
+    font-size: 1.08rem;
+    color: #222;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    width: 100%;
+    resize: none;
+    font-family: inherit;
+    line-height: 1.5;
 }
 
 h2 {

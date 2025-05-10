@@ -15,37 +15,39 @@
         </header>
 
         <main>
-            <section id="summarySection" class="dashboard-section">
-                <h2>Summary</h2>
-                <div class="summary-box-wrapper">
-                    <textarea id="summaryText" readonly class="summary-box">No summary available yet.</textarea>
-                </div>
-                <div class="summary-controls">
-                    <button id="refreshSummary">Refresh Summary</button>
-                </div>
-            </section>
-
-            <section id="querySection" class="dashboard-section">
-                <h2>Query Comments</h2>
-                <div class="query-tool">
-                    <div class="query-input-row">
-                        <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
-                        <button id="submitQuery">Ask</button>
+            <div class="top-row">
+                <section id="summarySection" class="dashboard-section">
+                    <h2>Summary</h2>
+                    <div class="summary-box-wrapper">
+                        <div id="summaryText" class="summary-block">No summary available yet.</div>
                     </div>
-                    <div id="suggestedQuestions">
-                        <div class="suggestion-buttons">
-                            <button class="suggestion" data-query="What are the top complaints?">Top Complaints</button>
-                            <button class="suggestion" data-query="What do users love about the companies?">Users Love...</button>
-                            <button class="suggestion" data-query="Summarize key changes in comments over the past 30 days">Changes (Past 30 Days)</button>
-                            <button class="suggestion" data-query="Identify emerging trends in user feedback">Emerging Trends</button>
+                    <div class="summary-controls">
+                        <button id="refreshSummary">Refresh Summary</button>
+                    </div>
+                </section>
+
+                <section id="querySection" class="dashboard-section">
+                    <h2>Query Comments</h2>
+                    <div class="query-tool">
+                        <div class="query-input-row">
+                            <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
+                            <button id="submitQuery">Ask</button>
+                        </div>
+                        <div id="suggestedQuestions">
+                            <div class="suggestion-buttons">
+                                <button class="suggestion" data-query="What are the top complaints?">Top Complaints</button>
+                                <button class="suggestion" data-query="What do users love about the companies?">Users Love...</button>
+                                <button class="suggestion" data-query="Summarize key changes in comments over the past 30 days">Changes (Past 30 Days)</button>
+                                <button class="suggestion" data-query="Identify emerging trends in user feedback">Emerging Trends</button>
+                            </div>
+                        </div>
+                        <div id="queryResult">
+                            <label for="queryResultText">Result</label>
+                            <div id="queryResultText" class="result-block">Query results will appear here.</div>
                         </div>
                     </div>
-                    <div id="queryResult">
-                        <label for="queryResultText">Result</label>
-                        <textarea id="queryResultText" readonly class="result-box">Query results will appear here.</textarea>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             <section id="issuesSection" class="dashboard-section">
                 <h2>Most Common Issues</h2>
