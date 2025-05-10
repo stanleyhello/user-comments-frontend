@@ -132,7 +132,73 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Load sentiment chart
+    async function loadSentimentChart() {
+        try {
+            const response = await fetch(`${BACKEND_URL}/chart/sentiment`);
+            const result = await response.json();
+
+            const sentimentChartCanvas = document.getElementById('sentimentChart');
+            const sentimentChartError = document.getElementById('sentimentChartError');
+
+            if (result.status === 'success') {
+                const sentimentTrends = result.sentiment_trends;
+                
+                // Hide any previous error
+                sentimentChartError.textContent = '';
+
+                // Create chart if sentiment data exists
+                if (Object.keys(sentimentTrends).length > 0) {
+                    new Chart(sentimentChartCanvas, {
+                        type: 'line',
+                        data: {
+                            labels: Object.keys(sentimentTrends),
+                            datasets: [{
+                                label: 'Sentiment Score',
+                                data: Object.values(sentimentTrends),
+                                borderColor: 'rgb(75, 192, 192)',
+                                tension: 0.1,
+                                fill: false,
+                                pointBackgroundColor: Object.values(sentimentTrends).map(score => 
+                                    score > 0.3 ? 'green' : (score < -0.3 ? 'red' : 'gray')
+                                )
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 1,
+                                    min: -1,
+                                    title: {
+                                        display: true,
+                                        text: 'Sentiment Score'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'User Sentiment Trends'
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    sentimentChartError.textContent = 'No sentiment data available.';
+                }
+            } else {
+                sentimentChartError.textContent = result.message || 'Error fetching sentiment data.';
+            }
+        } catch (error) {
+            console.error('Error loading sentiment chart:', error);
+            document.getElementById('sentimentChartError').textContent = 'Failed to load sentiment chart.';
+        }
+    }
+
     // Initial fetch
     fetchSummary();
     loadIssueChart();
+    loadSentimentChart();
 });
