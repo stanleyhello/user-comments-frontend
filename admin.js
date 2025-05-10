@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const queryInput = document.getElementById('queryInput');
     const submitQueryBtn = document.getElementById('submitQuery');
     const queryResultText = document.getElementById('queryResultText');
+    const suggestionButtons = document.querySelectorAll('.suggestion');
+
     // Fetch and display summary
     async function fetchSummary() {
         try {
@@ -24,13 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Query comments
-    async function queryComments() {
+    async function queryComments(query, button = null) {
+        // Disable buttons during query
+        submitQueryBtn.disabled = true;
+        suggestionButtons.forEach(btn => btn.disabled = true);
+        
+        // Clear previous result
+        queryResultText.textContent = 'Searching...';
+
         try {
             const response = await fetch(`${BACKEND_URL}/query_comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    query: queryInput.value
+                    query: query
                 })
             });
 
@@ -43,12 +52,26 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error:', error);
             queryResultText.textContent = 'An error occurred while querying comments.';
+        } finally {
+            // Re-enable buttons
+            submitQueryBtn.disabled = false;
+            suggestionButtons.forEach(btn => btn.disabled = false);
         }
     }
 
-    // Event listeners
-    refreshSummaryBtn.addEventListener('click', fetchSummary);
-    submitQueryBtn.addEventListener('click', queryComments);
+    // Event listeners for manual query
+    submitQueryBtn.addEventListener('click', () => {
+        queryComments(queryInput.value);
+    });
+
+    // Event listeners for suggestion buttons
+    suggestionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const query = button.getAttribute('data-query');
+            queryInput.value = query;
+            queryComments(query, button);
+        });
+    });
 
     // Initial fetch
     fetchSummary();

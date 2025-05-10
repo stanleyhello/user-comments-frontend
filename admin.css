@@ -42,3 +42,34 @@ input, button {
     border-radius: 5px;
     border: 1px solid #ddd;
 }
+
+#suggestedQuestions {
+    margin-top: 20px;
+}
+
+.suggestion-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.suggestion {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+.suggestion:hover {
+    background-color: #e0e0e0;
+}
+
+.suggestion:disabled {
+    background-color: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+}
