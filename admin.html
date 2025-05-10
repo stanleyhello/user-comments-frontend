@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <section id="summarySection">
+            <h2>Comment Summary</h2>
+            <div class="summary-controls">
+                <button id="refreshSummary">Refresh Summary</button>
+            </div>
+            <p id="summaryText">No summary available yet.</p>
+        </section>
+
+        <section id="querySection">
+            <h2>Query Comments</h2>
+            <div class="query-input">
+                <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
+                <button id="submitQuery">Ask Question</button>
+            </div>
+            <div id="queryResult">
+                <h3>Query Result:</h3>
+                <p id="queryResultText">Query results will appear here.</p>
+            </div>
+        </section>
+
+
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
