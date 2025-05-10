@@ -18,6 +18,12 @@
             <p id="summaryText">No summary available yet.</p>
         </section>
 
+        <section id="issuesSection">
+            <h2>Most Common Issues</h2>
+            <canvas id="issuesChart" width="400" height="200"></canvas>
+            <p id="issuesChartError" class="error-message"></p>
+        </section>
+
         <section id="querySection">
             <h2>Query Comments</h2>
             <div class="query-input">
@@ -43,5 +49,6 @@
     </div>
 
     <script src="admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

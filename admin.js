@@ -7,6 +7,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitQueryBtn = document.getElementById('submitQuery');
     const queryResultText = document.getElementById('queryResultText');
     const suggestionButtons = document.querySelectorAll('.suggestion');
+    const issuesChartCanvas = document.getElementById('issuesChart');
+    const issuesChartError = document.getElementById('issuesChartError');
+
+    // Load and render issues chart
+    async function loadIssueChart() {
+        try {
+            const response = await fetch(`${BACKEND_URL}/chart/issues`);
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                const issues = result.issues;
+                
+                // Hide any previous error
+                issuesChartError.textContent = '';
+
+                // Create chart if issues exist
+                if (Object.keys(issues).length > 0) {
+                    new Chart(issuesChartCanvas, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(issues),
+                            datasets: [{
+                                label: 'Frequency of Issues',
+                                data: Object.values(issues),
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Number of Mentions'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Most Common Issues in User Comments'
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    issuesChartError.textContent = 'No issues found in comments.';
+                }
+            } else {
+                issuesChartError.textContent = result.message || 'Error fetching issues.';
+            }
+        } catch (error) {
+            console.error('Error loading issues chart:', error);
+            issuesChartError.textContent = 'Failed to load issues chart.';
+        }
+    }
 
     // Fetch and display summary
     async function fetchSummary() {
@@ -75,4 +134,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial fetch
     fetchSummary();
+    loadIssueChart();
 });
