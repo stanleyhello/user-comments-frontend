@@ -8,37 +8,36 @@
 </head>
 <body>
     <div class="container">
-        <header class="dashboard-header">
-            <h1>Admin Dashboard</h1>
-            <hr class="divider" />
-            <p class="dashboard-intro">Monitor user sentiment, query feedback, and view key issues at a glance.</p>
+        <header class="dashboard-header fade-in">
+            <h1 class="dashboard-title">Admin Dashboard</h1>
+            <p class="dashboard-subtitle">Monitor user sentiment, query feedback, and view key issues at a glance.</p>
         </header>
 
         <main>
-            <div class="top-row">
-                <section id="summarySection" class="dashboard-section">
-                    <h2>Summary</h2>
+            <div class="dashboard-grid fade-in">
+                <section id="summarySection" class="dashboard-card">
+                    <h2 class="card-title">Summary</h2>
                     <div class="summary-box-wrapper">
                         <div id="summaryText" class="summary-block">No summary available yet.</div>
                     </div>
                     <div class="summary-controls">
-                        <button id="refreshSummary">Refresh Summary</button>
+                        <button id="refreshSummary" class="btn btn-secondary">Refresh Summary</button>
                     </div>
                 </section>
 
-                <section id="querySection" class="dashboard-section">
-                    <h2>Query Comments</h2>
+                <section id="querySection" class="dashboard-card">
+                    <h2 class="card-title">Query Comments</h2>
                     <div class="query-tool">
                         <div class="query-input-row">
                             <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
-                            <button id="submitQuery">Ask</button>
+                            <button id="submitQuery" class="btn btn-primary">Ask</button>
                         </div>
                         <div id="suggestedQuestions">
                             <div class="suggestion-buttons">
-                                <button class="suggestion" data-query="What are the top complaints?">Top Complaints</button>
-                                <button class="suggestion" data-query="What do users love about the companies?">Users Love...</button>
-                                <button class="suggestion" data-query="Summarize key changes in comments over the past 30 days">Changes (Past 30 Days)</button>
-                                <button class="suggestion" data-query="Identify emerging trends in user feedback">Emerging Trends</button>
+                                <button class="suggestion btn-pill" data-query="What are the top complaints?">Top Complaints</button>
+                                <button class="suggestion btn-pill" data-query="What do users love about the companies?">Users Love...</button>
+                                <button class="suggestion btn-pill" data-query="Summarize key changes in comments over the past 30 days">Changes (Past 30 Days)</button>
+                                <button class="suggestion btn-pill" data-query="Identify emerging trends in user feedback">Emerging Trends</button>
                             </div>
                         </div>
                         <div id="queryResult">
@@ -49,14 +48,14 @@
                 </section>
             </div>
 
-            <section id="issuesSection" class="dashboard-section">
-                <h2>Most Common Issues</h2>
+            <section id="issuesSection" class="dashboard-card fade-in">
+                <h2 class="card-title">Most Common Issues</h2>
                 <canvas id="issuesChart" width="400" height="200"></canvas>
                 <p id="issuesChartError" class="error-message"></p>
             </section>
 
-            <section id="sentimentSection" class="dashboard-section">
-                <h2>User Sentiment Over Time</h2>
+            <section id="sentimentSection" class="dashboard-card fade-in">
+                <h2 class="card-title">User Sentiment Over Time</h2>
                 <canvas id="sentimentChart" width="400" height="200"></canvas>
                 <p id="sentimentChartError" class="error-message"></p>
             </section>
