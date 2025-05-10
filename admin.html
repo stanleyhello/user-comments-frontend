@@ -8,50 +8,57 @@
 </head>
 <body>
     <div class="container">
-        <h1>Admin Dashboard</h1>
+        <header class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <hr class="divider" />
+            <p class="dashboard-intro">Monitor user sentiment, query feedback, and view key issues at a glance.</p>
+        </header>
 
-        <section id="summarySection">
-            <h2>Comment Summary</h2>
-            <div class="summary-controls">
-                <button id="refreshSummary">Refresh Summary</button>
-            </div>
-            <p id="summaryText">No summary available yet.</p>
-        </section>
-
-        <section id="issuesSection">
-            <h2>Most Common Issues</h2>
-            <canvas id="issuesChart" width="400" height="200"></canvas>
-            <p id="issuesChartError" class="error-message"></p>
-        </section>
-
-        <section id="sentimentSection">
-            <h2>User Sentiment Over Time</h2>
-            <canvas id="sentimentChart" width="400" height="200"></canvas>
-            <p id="sentimentChartError" class="error-message"></p>
-        </section>
-
-        <section id="querySection">
-            <h2>Query Comments</h2>
-            <div class="query-input">
-                <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
-                <button id="submitQuery">Ask Question</button>
-            </div>
-            <div id="suggestedQuestions">
-                <h3>Suggested Questions:</h3>
-                <div class="suggestion-buttons">
-                    <button class="suggestion" data-query="What are the top complaints?">Top Complaints</button>
-                    <button class="suggestion" data-query="What do users love about the companies?">Users Love...</button>
-                    <button class="suggestion" data-query="Summarize key changes in comments over the past 30 days">Changes (Past 30 Days)</button>
-                    <button class="suggestion" data-query="Identify emerging trends in user feedback">Emerging Trends</button>
+        <main>
+            <section id="summarySection" class="dashboard-section">
+                <h2>Summary</h2>
+                <div class="summary-box-wrapper">
+                    <textarea id="summaryText" readonly class="summary-box">No summary available yet.</textarea>
                 </div>
-            </div>
-            <div id="queryResult">
-                <h3>Query Result:</h3>
-                <p id="queryResultText">Query results will appear here.</p>
-            </div>
-        </section>
+                <div class="summary-controls">
+                    <button id="refreshSummary">Refresh Summary</button>
+                </div>
+            </section>
 
+            <section id="querySection" class="dashboard-section">
+                <h2>Query Comments</h2>
+                <div class="query-tool">
+                    <div class="query-input-row">
+                        <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
+                        <button id="submitQuery">Ask</button>
+                    </div>
+                    <div id="suggestedQuestions">
+                        <div class="suggestion-buttons">
+                            <button class="suggestion" data-query="What are the top complaints?">Top Complaints</button>
+                            <button class="suggestion" data-query="What do users love about the companies?">Users Love...</button>
+                            <button class="suggestion" data-query="Summarize key changes in comments over the past 30 days">Changes (Past 30 Days)</button>
+                            <button class="suggestion" data-query="Identify emerging trends in user feedback">Emerging Trends</button>
+                        </div>
+                    </div>
+                    <div id="queryResult">
+                        <label for="queryResultText">Result</label>
+                        <textarea id="queryResultText" readonly class="result-box">Query results will appear here.</textarea>
+                    </div>
+                </div>
+            </section>
 
+            <section id="issuesSection" class="dashboard-section">
+                <h2>Most Common Issues</h2>
+                <canvas id="issuesChart" width="400" height="200"></canvas>
+                <p id="issuesChartError" class="error-message"></p>
+            </section>
+
+            <section id="sentimentSection" class="dashboard-section">
+                <h2>User Sentiment Over Time</h2>
+                <canvas id="sentimentChart" width="400" height="200"></canvas>
+                <p id="sentimentChartError" class="error-message"></p>
+            </section>
+        </main>
     </div>
 
     <script src="admin.js"></script>
