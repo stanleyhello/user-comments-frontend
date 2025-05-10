@@ -16,7 +16,7 @@
         <main>
             <div class="dashboard-grid fade-in">
                 <section id="summarySection" class="dashboard-card">
-                    <h2 class="card-title">Summary</h2>
+                    <h2 class="card-title center">Summary</h2>
                     <div class="summary-box-wrapper">
                         <div id="summaryText" class="summary-block">No summary available yet.</div>
                     </div>
@@ -26,7 +26,7 @@
                 </section>
 
                 <section id="querySection" class="dashboard-card">
-                    <h2 class="card-title">Query Comments</h2>
+                    <h2 class="card-title center">Query Comments</h2>
                     <div class="query-tool">
                         <div class="query-input-row">
                             <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
@@ -46,17 +46,15 @@
                         </div>
                     </div>
                 </section>
-            </div>
 
-            <div class="charts-row fade-in">
-                <section id="issuesSection" class="dashboard-card chart-card">
-                    <h2 class="card-title">Most Common Issues</h2>
+                <section id="issuesSection" class="dashboard-card">
+                    <h2 class="card-title center">Most Common Issues</h2>
                     <canvas id="issuesChart" width="320" height="160"></canvas>
                     <p id="issuesChartError" class="error-message"></p>
                 </section>
 
-                <section id="sentimentSection" class="dashboard-card chart-card">
-                    <h2 class="card-title">User Sentiment Over Time</h2>
+                <section id="sentimentSection" class="dashboard-card">
+                    <h2 class="card-title center">User Sentiment Over Time</h2>
                     <canvas id="sentimentChart" width="320" height="160"></canvas>
                     <p id="sentimentChartError" class="error-message"></p>
                 </section>
