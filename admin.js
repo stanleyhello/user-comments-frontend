@@ -1,6 +1,37 @@
 const BACKEND_URL = "https://user-comments-backend.onrender.com"; // Replace with your Render URL
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.getAttribute('data-tab');
+            
+            // Update active tab button
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Show active tab pane
+            tabPanes.forEach(pane => {
+                if (pane.id === `${tabId}-tab`) {
+                    pane.classList.add('active');
+                } else {
+                    pane.classList.remove('active');
+                }
+            });
+            
+            // Save active tab to localStorage
+            localStorage.setItem('activeTab', tabId);
+        });
+    });
+    
+    // Load active tab from localStorage
+    const savedTab = localStorage.getItem('activeTab') || 'summary';
+    document.querySelector(`.tab-btn[data-tab="${savedTab}"]`).click();
+
+    // DOM Elements
     const summaryText = document.getElementById('summaryText');
     const refreshSummaryBtn = document.getElementById('refreshSummary');
     const queryInput = document.getElementById('queryInput');
@@ -15,6 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const promptInput = document.getElementById('promptInput');
     const countInput = document.getElementById('countInput');
     const generateStatus = document.getElementById('generateStatus');
+
+    // Initialize charts
+    let issuesChart;
 
     // Generate Sample Data
     async function generateSampleData() {
