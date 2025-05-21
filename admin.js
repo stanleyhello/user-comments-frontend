@@ -9,6 +9,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const suggestionButtons = document.querySelectorAll('.suggestion');
     const issuesChartCanvas = document.getElementById('issuesChart');
     const issuesChartError = document.getElementById('issuesChartError');
+    
+    // Generate Sample Data Elements
+    const generateDataBtn = document.getElementById('generateDataBtn');
+    const promptInput = document.getElementById('promptInput');
+    const countInput = document.getElementById('countInput');
+    const generateStatus = document.getElementById('generateStatus');
+
+    // Generate Sample Data
+    async function generateSampleData() {
+        const prompt = promptInput.value.trim();
+        const count = parseInt(countInput.value, 10);
+
+        // Validate inputs
+        if (!prompt) {
+            showStatus('Please enter a prompt', 'error');
+            return;
+        }
+
+
+        if (isNaN(count) || count < 1 || count > 20) {
+            showStatus('Please enter a number between 1 and 20', 'error');
+            return;
+        }
+
+
+        try {
+            // Disable button and show loading state
+            generateDataBtn.disabled = true;
+            showStatus('Generating sample comments...', 'info');
+
+            const response = await fetch(`${BACKEND_URL}/generate_comments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt, count })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showStatus(`Successfully generated ${result.count} sample comments!`, 'success');
+                // Refresh the summary to show new data
+                fetchSummary();
+            } else {
+                showStatus(`Error: ${result.error || 'Failed to generate sample data'}`, 'error');
+            }
+        } catch (error) {
+            console.error('Error generating sample data:', error);
+            showStatus('An error occurred while generating sample data', 'error');
+        } finally {
+            generateDataBtn.disabled = false;
+        }
+    }
+
+
+    // Helper function to show status messages
+    function showStatus(message, type = 'info') {
+        generateStatus.textContent = message;
+        generateStatus.className = 'status-message';
+        if (type !== 'info') {
+            generateStatus.classList.add(type);
+        }
+    }
+
+    // Event listener for generate button
+    if (generateDataBtn) {
+        generateDataBtn.addEventListener('click', generateSampleData);
+    }
 
     // Load and render issues chart
     async function loadIssueChart() {
@@ -201,4 +268,13 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchSummary();
     loadIssueChart();
     loadSentimentChart();
+    
+    // Add enter key support for the prompt input
+    if (promptInput) {
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                generateSampleData();
+            }
+        });
+    }
 });

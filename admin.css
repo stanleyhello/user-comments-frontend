@@ -248,6 +248,69 @@ h2 {
     color: #23272f;
     border: 1px solid #cbd5e1;
 }
+
+/* Sample Data Section */
+.sample-data-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-control {
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.status-message {
+    margin: 8px 0 0 0;
+    min-height: 24px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.status-message.success {
+    color: #059669;
+}
+
+.status-message.error {
+    color: #dc2626;
+}
+
+#generateDataBtn {
+    align-self: flex-start;
+    margin-top: 8px;
+}
+
+#generateDataBtn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sample-data-form {
+        gap: 14px;
+    }
+    
+    .form-control {
+        padding: 8px 12px;
+    }
+}
 .btn-secondary:hover, .btn-secondary:focus {
     background: #e5e7eb;
     color: #23272f;
