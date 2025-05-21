@@ -136,19 +136,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and display summary
     async function fetchSummary() {
+        // Show loading state
+        summaryText.textContent = 'Loading summary...';
+        summaryText.className = 'summary-text loading';
+        
         try {
             const response = await fetch(`${BACKEND_URL}/get_summary`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const result = await response.json();
 
             if (result.status === 'success') {
                 summaryText.textContent = result.summary || 'No summary available.';
+                summaryText.className = 'summary-text';
             } else {
-                summaryText.textContent = 'Error fetching summary: ' + result.message;
+                throw new Error(result.message || 'Failed to fetch summary');
             }
         } catch (error) {
-            console.error('Error:', error);
-            summaryText.textContent = 'An error occurred while fetching the summary.';
+            console.error('Error fetching summary:', error);
+            summaryText.textContent = 'Failed to fetch summary. Please try again.';
+            summaryText.className = 'summary-text error';
         }
+    }
+    
+    // Add click event listener to refresh button
+    if (refreshSummaryBtn) {
+        refreshSummaryBtn.addEventListener('click', fetchSummary);
     }
 
     // Query comments
@@ -264,10 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initial fetch
-    fetchSummary();
-    loadIssueChart();
-    loadSentimentChart();
+    // Initial fetches
+    Promise.all([
+        fetchSummary(),
+        loadIssueChart(),
+        loadSentimentChart()
+    ]).catch(error => {
+        console.error('Error during initial data loading:', error);
+    });
     
     // Add enter key support for the prompt input
     if (promptInput) {
