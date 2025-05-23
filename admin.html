@@ -3,191 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Comment Analysis</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>Comment Analyzer</h2>
+    <div class="container">
+        <header class="dashboard-header fade-in" style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+            <div>
+                <h1 class="dashboard-title">Admin Dashboard</h1>
+                <p class="dashboard-subtitle">Monitor user sentiment, query feedback, and view key issues at a glance.</p>
             </div>
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-comments"></i>
-                    <span>Comments</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Analytics</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </nav>
-        </aside>
+            <a href="index.html" class="btn btn-primary nav-btn">Go to User Page</a>
+        </header>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Top Bar -->
-            <header class="top-bar">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search...">
-                </div>
-                <div class="user-menu">
-                    <span class="user-name">Admin User</span>
-                    <div class="user-avatar">AU</div>
-                </div>
-            </header>
-
-            <!-- Content Wrapper -->
-            <div class="content-wrapper">
-                <h1>Comment Analysis Dashboard</h1>
-                <p class="text-muted">Manage and analyze user feedback in real-time</p>
-                
-                <!-- Tabs -->
-                <div class="tabs">
-                    <button class="tab-btn active" data-tab="summary">
-                        <i class="fas fa-home"></i>
-                        <span>Summary</span>
-                    </button>
-                    <button class="tab-btn" data-tab="reports">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Reports</span>
-                    </button>
-                </div>
-
-                <!-- Tab Panes -->
-                <div class="tab-content">
-                    <!-- Summary Tab -->
-                    <div id="summary-tab" class="tab-pane active">
-                        <div class="dashboard-grid">
-                            <!-- Summary Card -->
-                            <div class="card summary-card">
-                                <div class="card-header">
-                                    <h3>Comment Summary</h3>
-                                    <button id="refreshSummary" class="btn-icon" title="Refresh Summary">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </button>
-                                </div>
-                                <div class="card-body">
-                                    <div id="summaryLoading" class="loading">Loading summary...</div>
-                                    <div id="summaryError" class="status-message error" style="display: none;">
-                                        Error loading summary. Please try again.
-                                    </div>
-                                    <div id="summaryText" class="summary-text"></div>
-                                </div>
-                            </div>
-
-                            <!-- Query Card -->
-                            <div class="card query-card">
-                                <div class="card-header">
-                                    <h3>Query Assistant</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="query-tool">
-                                        <div class="query-input-row">
-                                            <input type="text" id="queryInput" placeholder="Ask a question about the comments..." class="form-control">
-                                            <button id="queryBtn" class="btn btn-primary">
-                                                <i class="fas fa-search"></i> Search
-                                            </button>
-                                        </div>
-                                        <div class="suggestion-buttons">
-                                            <button class="btn-pill query-suggestion" data-query="What are the main themes in the comments?">
-                                                <i class="fas fa-lightbulb"></i> Main themes
-                                            </button>
-                                            <button class="btn-pill query-suggestion" data-query="What are the most common issues mentioned?">
-                                                <i class="fas fa-exclamation-circle"></i> Common issues
-                                            </button>
-                                            <button class="btn-pill query-suggestion" data-query="What is the overall sentiment of the comments?">
-                                                <i class="fas fa-smile"></i> Sentiment
-                                            </button>
-                                                </button>
-                                                <button class="suggestion btn-pill" data-query="Summarize key changes in comments over the past 30 days">
-                                                    <i class="fas fa-calendar-week"></i> Recent Changes
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div id="queryResult">
-                                            <div class="result-header">
-                                                <label>AI Response</label>
-                                                <button class="btn-icon copy-result" title="Copy to clipboard">
-                                                    <i class="far fa-copy"></i>
-                                                </button>
-                                            </div>
-                                            <div id="queryResultText" class="result-block">Ask a question to get started...</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <main>
+            <div class="dashboard-grid fade-in">
+                <section id="sampleDataSection" class="dashboard-card">
+                    <h2 class="card-title center">Generate Sample Data</h2>
+                    <div class="sample-data-form">
+                        <div class="form-group">
+                            <label for="promptInput">Prompt</label>
+                            <input type="text" id="promptInput" class="form-control" placeholder="e.g., positive comments about Best Buy">
                         </div>
-                    </div>
-
-                    <!-- Reports Tab -->
-                    <div id="reports-tab" class="tab-pane">
-                        <div class="dashboard-grid">
-                            <!-- Issues Chart -->
-                            <div class="card chart-card">
-                                <div class="card-header">
-                                    <h3>Most Common Issues</h3>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="issuesChart"></canvas>
-                                    <p id="issuesChartError" class="error-message"></p>
-                                </div>
-                            </div>
-
-                            <!-- Sentiment Chart -->
-                            <div class="card chart-card">
-                                <div class="card-header">
-                                    <h3>User Sentiment Over Time</h3>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="sentimentChart"></canvas>
-                                    <p id="sentimentChartError" class="error-message"></p>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="countInput">How many? (1-20)</label>
+                            <input type="number" id="countInput" class="form-control" min="1" max="20" value="5">
                         </div>
-                    </div>
-                </div>
-
-                <!-- Generate Sample Data Panel (Fixed at bottom) -->
-                <div class="generate-data-panel">
-                    <div class="panel-header">
-                        <h3><i class="fas fa-magic"></i> Generate Sample Data</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="promptInput">Prompt</label>
-                                <input type="text" id="promptInput" class="form-control" 
-                                       placeholder="e.g., positive comments about Best Buy">
-                            </div>
-                            <div class="form-group count-input">
-                                <label for="countInput">Count</label>
-                                <input type="number" id="countInput" class="form-control" 
-                                       min="1" max="20" value="5">
-                            </div>
-                            <button id="generateDataBtn" class="btn btn-primary">
-                                <i class="fas fa-plus-circle"></i> Generate
-                            </button>
-                        </div>
+                        <button id="generateDataBtn" class="btn btn-primary">Generate Comments</button>
                         <p id="generateStatus" class="status-message"></p>
                     </div>
-                </div>
+                </section>
+
+                <section id="summarySection" class="dashboard-card">
+                    <h2 class="card-title center">Summary</h2>
+                    <div class="summary-box-wrapper">
+                        <div id="summaryText" class="summary-block">No summary available yet.</div>
+                    </div>
+                    <div class="summary-controls">
+                        <button id="refreshSummary" class="btn btn-secondary">Refresh Summary</button>
+                    </div>
+                </section>
+
+                <section id="querySection" class="dashboard-card">
+                    <h2 class="card-title center">Query Comments</h2>
+                    <div class="query-tool">
+                        <div class="query-input-row">
+                            <input type="text" id="queryInput" placeholder="Ask a question about the comments" />
+                            <button id="submitQuery" class="btn btn-primary">Ask</button>
+                        </div>
+                        <div id="suggestedQuestions">
+                            <div class="suggestion-buttons">
+                                <button class="suggestion btn-pill" data-query="What are the top complaints?">Top Complaints</button>
+                                <button class="suggestion btn-pill" data-query="What do users love about the companies?">Users Love...</button>
+                                <button class="suggestion btn-pill" data-query="Summarize key changes in comments over the past 30 days">Changes (Past 30 Days)</button>
+                                <button class="suggestion btn-pill" data-query="Identify emerging trends in user feedback">Emerging Trends</button>
+                            </div>
+                        </div>
+                        <div id="queryResult">
+                            <label for="queryResultText">Result</label>
+                            <div id="queryResultText" class="result-block">Query results will appear here.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="issuesSection" class="dashboard-card">
+                    <h2 class="card-title center">Most Common Issues</h2>
+                    <canvas id="issuesChart" width="320" height="160"></canvas>
+                    <p id="issuesChartError" class="error-message"></p>
+                </section>
+
+                <section id="sentimentSection" class="dashboard-card">
+                    <h2 class="card-title center">User Sentiment Over Time</h2>
+                    <canvas id="sentimentChart" width="320" height="160"></canvas>
+                    <p id="sentimentChartError" class="error-message"></p>
+                </section>
             </div>
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
