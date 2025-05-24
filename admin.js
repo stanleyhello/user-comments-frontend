@@ -1,5 +1,292 @@
 const BACKEND_URL = "https://user-comments-backend.onrender.com"; // Replace with your Render URL
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const dashboardTab = document.getElementById('dashboard-tab');
+    const reportsTab = document.getElementById('reports-tab');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const pageTitle = document.getElementById('page-title');
+    
+    // Initialize charts
+    let topicsChart = null;
+    let sentimentChart = null;
+    
+    // Initialize the page
+    function initPage() {
+        // Set up tab switching
+        setupTabs();
+        
+        // Initialize charts
+        initCharts();
+        
+        // Set up event listeners
+        setupEventListeners();
+        
+        // Show dashboard by default
+        showTab('dashboard');
+    }
+    
+    function setupTabs() {
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('href').substring(1); // Remove the '#'
+                showTab(target);
+                
+                // Update active state
+                navLinks.forEach(nav => nav.parentElement.classList.remove('active'));
+                this.parentElement.classList.add('active');
+            });
+        });
+    }
+    
+    function showTab(tabName) {
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Show the selected tab
+        const tabToShow = document.getElementById(`${tabName}-tab`);
+        if (tabToShow) {
+            tabToShow.classList.add('active');
+        }
+        
+        // Update page title
+        pageTitle.textContent = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+        
+        // Handle any tab-specific initialization
+        if (tabName === 'reports') {
+            updateCharts();
+        }
+    }
+    
+    function initCharts() {
+        // Initialize Topics Chart
+        const topicsCtx = document.getElementById('topicsChart').getContext('2d');
+        topicsChart = new Chart(topicsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Customer Service', 'Product Quality', 'Shipping', 'Pricing', 'Website'],
+                datasets: [{
+                    label: 'Mentions',
+                    data: [12, 19, 8, 15, 7],
+                    backgroundColor: [
+                        'rgba(0, 194, 168, 0.7)',
+                        'rgba(0, 194, 168, 0.5)',
+                        'rgba(0, 194, 168, 0.3)',
+                        'rgba(0, 194, 168, 0.4)',
+                        'rgba(0, 194, 168, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 194, 168, 1)',
+                        'rgba(0, 194, 168, 0.8)',
+                        'rgba(0, 194, 168, 0.6)',
+                        'rgba(0, 194, 168, 0.7)',
+                        'rgba(0, 194, 168, 0.5)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // Initialize Sentiment Chart
+        const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+        sentimentChart = new Chart(sentimentCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Positive',
+                        data: [65, 59, 80, 81, 76, 85],
+                        borderColor: 'rgba(0, 194, 168, 1)',
+                        backgroundColor: 'rgba(0, 194, 168, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Negative',
+                        data: [28, 48, 40, 19, 36, 27],
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        backgroundColor: '#1F2937',
+                        titleColor: '#F9FAFB',
+                        bodyColor: '#E5E7EB',
+                        borderColor: '#374151',
+                        borderWidth: 1,
+                        padding: 12,
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                    }
+                }
+            }
+        });
+    }
+    
+    function updateCharts() {
+        // In a real app, you would fetch new data here and update the charts
+        console.log('Updating charts with fresh data...');
+        
+        // Example of how to update chart data:
+        // if (topicsChart) {
+        //     topicsChart.data.datasets[0].data = [newData1, newData2, ...];
+        //     topicsChart.update();
+        // }
+    }
+    
+    function setupEventListeners() {
+        // Refresh summary button
+        const refreshBtn = document.getElementById('refreshSummary');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                // Show loading state
+                const summaryText = document.getElementById('summaryText');
+                summaryText.innerHTML = 'Generating summary... <i class="fas fa-spinner fa-spin"></i>';
+                
+                // In a real app, you would fetch the summary from your backend
+                setTimeout(() => {
+                    summaryText.textContent = "Here's your updated summary with the latest user feedback trends and insights...";
+                }, 1500);
+            });
+        }
+        
+        // Generate sample data button
+        const generateBtn = document.getElementById('generateDataBtn');
+        if (generateBtn) {
+            generateBtn.addEventListener('click', function() {
+                const prompt = document.getElementById('promptInput').value;
+                const count = document.getElementById('countInput').value;
+                const statusEl = document.getElementById('generateStatus');
+                
+                if (!prompt) {
+                    showStatus('Please enter a prompt', 'error', statusEl);
+                    return;
+                }
+                
+                // Show loading state
+                generateBtn.disabled = true;
+                generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+                
+                // In a real app, you would call your backend API here
+                console.log(`Generating ${count} sample comments with prompt: ${prompt}`);
+                
+                // Simulate API call
+                setTimeout(() => {
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generate Data';
+                    showStatus(`Successfully generated ${count} sample comments!`, 'success', statusEl);
+                }, 2000);
+            });
+        }
+        
+        // AI Query submission
+        const queryInput = document.getElementById('queryInput');
+        const submitQueryBtn = document.getElementById('submitQuery');
+        const queryResult = document.getElementById('queryResultText');
+        
+        if (submitQueryBtn && queryInput) {
+            const handleQuery = () => {
+                const question = queryInput.value.trim();
+                if (!question) return;
+                
+                // Show loading state
+                queryResult.innerHTML = 'Thinking... <i class="fas fa-spinner fa-spin"></i>';
+                
+                // In a real app, you would call your backend API here
+                setTimeout(() => {
+                    queryResult.innerHTML = `
+                        <p><strong>Question:</strong> ${question}</p>
+                        <p><strong>Answer:</strong> Based on the latest user feedback, I can provide insights about ${question.toLowerCase()}.</p>
+                        <div class="mt-2 p-2 bg-blue-50 rounded text-sm">
+                            <p class="font-medium">Analysis based on 142 recent comments</p>
+                            <ul class="list-disc pl-5 mt-1 space-y-1">
+                                <li>72% positive sentiment</li>
+                                <li>15% negative sentiment</li>
+                                <li>13% neutral sentiment</li>
+                            </ul>
+                        </div>
+                    `;
+                }, 1500);
+            };
+            
+            submitQueryBtn.addEventListener('click', handleQuery);
+            queryInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleQuery();
+            });
+        }
+    }
+    
+    function showStatus(message, type, element) {
+        if (!element) return;
+        
+        element.textContent = message;
+        element.className = 'status-message';
+        element.classList.add(type);
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            element.className = 'status-message';
+        }, 5000);
+    }
+    
+    // Initialize the page
+    initPage();
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const summaryText = document.getElementById('summaryText');
     const refreshSummaryBtn = document.getElementById('refreshSummary');
